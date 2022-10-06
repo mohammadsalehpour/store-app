@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\IndexController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,14 +19,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('test/{name}', function ($name)
-{
+Route::get('test/{name}', function ($name) {
     $users = [
         "ali",
         "reza"
     ];
 
-    return view('test', ['name'=>$name, 'users'=>$users]);
+    return view('test', ['name' => $name, 'users' => $users]);
 });
 
 Route::middleware([
@@ -37,3 +37,27 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+
+
+
+
+
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+    ])->name('admin.')->prefix('adminn')->group(function () {
+        Route::get('/', [IndexController::class, 'index'])->name('index');
+    });
+
+// Route::get('/admin', [IndexController::class, 'index'])
+//     ->name('admin.index');
+
+// Route::get('/admin', function () {
+//     return "view('admin.index')";
+// });
+
+
+// Route::get('/aaa', [IndexController::class, 'index']);
