@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\IndexController;
+use App\Http\Controllers\Admin\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,7 +43,7 @@ Route::middleware([
 
 
 
-
+Route::get('/redirect', [IndexController::class, 'redirect']);
 
 Route::middleware([
     'auth:sanctum',
@@ -50,14 +51,5 @@ Route::middleware([
     'verified'
     ])->name('admin.')->prefix('adminn')->group(function () {
         Route::get('/', [IndexController::class, 'index'])->name('index');
+        Route::resource('/users', UserController::class);
     });
-
-// Route::get('/admin', [IndexController::class, 'index'])
-//     ->name('admin.index');
-
-// Route::get('/admin', function () {
-//     return "view('admin.index')";
-// });
-
-
-// Route::get('/aaa', [IndexController::class, 'index']);
